@@ -1,4 +1,5 @@
 'use client'
+import { Variants } from 'framer-motion'
 
 import { FaCode, FaLaptopCode, FaGraduationCap } from 'react-icons/fa'
 import { motion } from 'framer-motion'
@@ -27,9 +28,10 @@ export default function About() {
         {...fadeInUp}
       >
         <p className="text-lg text-secondary max-w-3xl mx-auto text-center">
-          I&apos;m a passionate Full Stack Developer with expertise in building modern web applications.
-          With a strong foundation in both frontend and backend technologies, I create seamless
-          user experiences and robust server-side solutions.
+I&apos;m Sanwal Iqbal, a dedicated Web Developer and UI/UX enthusiast.
+ I focus on creating clean, modern websites with smooth user experiences and reliable functionality.
+  Combining my frontend skills with practical backend knowledge,
+   I build projects that are both visually appealing and technically solid.
         </p>
       </motion.section>
 
@@ -54,7 +56,7 @@ export default function About() {
           <motion.div 
             className="bg-white dark:bg-dark/50 p-6 rounded-lg shadow-md"
             variants={fadeInUp}
-            {...(cardHover as any)}
+            {...(cardHover as Variants)}
           >
             <FaCode className="h-8 w-8 text-primary mb-4" />
             <h3 className="text-xl font-semibold mb-2">Frontend</h3>
@@ -62,43 +64,42 @@ export default function About() {
               <li>React / Next.js</li>
               <li>TypeScript</li>
               <li>Tailwind CSS</li>
-              <li>HTML5 / CSS3</li>
+              <li>HTML / CSS</li>
             </ul>
           </motion.div>
           
           <motion.div 
             className="bg-white dark:bg-dark/50 p-6 rounded-lg shadow-md"
             variants={fadeInUp}
-            {...(cardHover as any)}
+            {...(cardHover as Variants)}
           >
             <FaLaptopCode className="h-8 w-8 text-primary mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Backend</h3>
+            <h3 className="text-xl font-semibold mb-2">Backend(Basics)</h3>
             <ul className="text-secondary space-y-2">
               <li>Node.js</li>
               <li>Express</li>
-              <li>PostgreSQL</li>
-              <li>MongoDB</li>
-            </ul>
+              <li>Pandas / Streamlit</li>        
+                  </ul>
           </motion.div>
           
           <motion.div 
             className="bg-white dark:bg-dark/50 p-6 rounded-lg shadow-md"
             variants={fadeInUp}
-            {...(cardHover as any)}
+            {...(cardHover as Variants)}
           >
             <FaGraduationCap className="h-8 w-8 text-primary mb-4" />
             <h3 className="text-xl font-semibold mb-2">Tools & Others</h3>
             <ul className="text-secondary space-y-2">
               <li>Git / GitHub</li>
-              <li>Docker</li>
-              <li>AWS</li>
-              <li>CI/CD</li>
+              <li>VS Code</li>
+              <li>Python</li>
+              <li>Netlify / Vercel</li>
             </ul>
           </motion.div>
         </motion.div>
       </motion.section>
 
-      {/* Experience Section */}
+      {/* Experience Section
       <motion.section 
         className="mb-16"
         {...fadeIn}
@@ -144,7 +145,7 @@ export default function About() {
             </ul>
           </motion.div>
         </motion.div>
-      </motion.section>
+      </motion.section> */}
 
       {/* Education Section */}
       <motion.section
@@ -166,12 +167,12 @@ export default function About() {
           <motion.div 
             className="bg-white dark:bg-dark/50 p-6 rounded-lg shadow-md"
             variants={fadeInUp}
-            {...(cardHoverSmall as any)}
+            {...(cardHoverSmall as Variants)}
           >
-            <h3 className="text-xl font-semibold mb-2">Bachelor of Science in Computer Science</h3>
-            <p className="text-primary mb-2">University Name • 2014 - 2018</p>
+            <h3 className="text-xl font-semibold mb-2">Intermediate – Pre-Medical</h3>
+            <p className="text-primary mb-2">Biek Karachi  • 2025-2026</p>
             <p className="text-secondary">
-              Graduated with honors. Focused on software engineering and web development.
+From small Python scripts to interactive web projects — always learning, always building.
             </p>
           </motion.div>
         </motion.div>

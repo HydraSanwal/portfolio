@@ -46,7 +46,7 @@ export default function Hero() {
             transition={{ delay: 0.5 }}
           >
             <motion.a
-              href="https://github.com"
+              href="https://github.com/HydraSanwal"
               target="_blank"
               rel="noopener noreferrer"
               className="text-2xl text-gray-600 hover:text-primary dark:text-gray-300 dark:hover:text-primary transition-colors"

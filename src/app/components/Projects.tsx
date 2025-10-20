@@ -1,4 +1,5 @@
 'use client'
+import { Variants } from 'framer-motion'
 
 import { projects } from '@/contents/projects'
 import Image from 'next/image'
@@ -28,7 +29,7 @@ export default function Projects() {
               key={project.title}
               className="bg-white dark:bg-dark/50 rounded-lg shadow-md p-6"
               variants={fadeInUp}
-              {...(cardHoverSmall as any)}
+              {...(cardHoverSmall as Variants)}
             >
               <div className="relative aspect-video mb-4 rounded-lg overflow-hidden">
                 <Image

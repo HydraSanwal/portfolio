@@ -1,4 +1,5 @@
 'use client'
+import { Variants } from 'framer-motion'
 
 import { blogs } from '@/contents/blogs'
 import Link from 'next/link'
@@ -28,8 +29,8 @@ export default function Blogs() {
           <motion.article
             key={index}
             className="bg-white dark:bg-dark/50 rounded-lg shadow-md overflow-hidden"
-            variants={fadeInUp as any}
-            {...(cardHoverSmall as any)}
+            variants={fadeInUp as Variants}
+            {...(cardHoverSmall as Variants)}
           >
             <div className="p-6">
               <motion.h2 
