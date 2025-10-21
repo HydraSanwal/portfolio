@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 export default function RobotMascot() {
   const controls = useAnimation();
   const [text, setText] = useState("🤖 Hey there!");
+  const [isMobile, setIsMobile] = useState(false);
 
   const messages = [
     "🤖 Hey there, human!",
@@ -18,10 +19,17 @@ export default function RobotMascot() {
   ];
 
   useEffect(() => {
-    const move = async () => {
-      const isMobile = window.innerWidth < 768;
-      if (isMobile) return; // skip movement on mobile
+    // detect mobile dynamically
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    handleResize(); // initial check
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
+  useEffect(() => {
+    if (isMobile) return; // skip movement on mobile
+
+    const move = async () => {
       const screenWidth = window.innerWidth;
       const leftLimit = screenWidth * 0.1;  // 10% from left
       const rightLimit = screenWidth * 0.9; // 10% from right
@@ -30,29 +38,30 @@ export default function RobotMascot() {
         // Move right
         await controls.start({
           x: rightLimit - leftLimit,
-          transition: { duration: 24, ease: "easeInOut" }, // slower
+          transition: { duration: 24, ease: "easeInOut" },
         });
-        await new Promise((r) => setTimeout(r, 2000)); // pause
+        await new Promise((r) => setTimeout(r, 2000));
 
         // Move left
         await controls.start({
           x: 0,
           transition: { duration: 24, ease: "easeInOut" },
         });
-        await new Promise((r) => setTimeout(r, 2000)); // pause
+        await new Promise((r) => setTimeout(r, 2000));
       }
     };
+
     move();
-  }, [controls]);
+  }, [controls, isMobile]);
 
   useEffect(() => {
     let i = 0;
     const loopText = async () => {
       while (true) {
         setText(messages[i]);
-        await new Promise((r) => setTimeout(r, 30000)); // show 30s
+        await new Promise((r) => setTimeout(r, 30000));
         setText("");
-        await new Promise((r) => setTimeout(r, 5000)); // pause 5s
+        await new Promise((r) => setTimeout(r, 5000));
         i = (i + 1) % messages.length;
       }
     };
@@ -61,9 +70,9 @@ export default function RobotMascot() {
 
   return (
     <motion.div
-      className={`fixed bottom-10 z-50 flex flex-col items-center 
-        ${typeof window !== "undefined" && window.innerWidth < 768 ? "left-[20%]" : "left-[10%]"}
-      `}
+      className={`fixed bottom-10 z-50 flex flex-col items-center ${
+        isMobile ? "left-[20%]" : "left-[10%]"
+      }`}
       animate={controls}
     >
       {text && (
