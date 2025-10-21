@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 
 export default function RobotMascot() {
   const controls = useAnimation();
-  const [text, setText] = useState("🤖 Hmm...");
+  const [text, setText] = useState("🤖 Hey there!");
   const [isMobile, setIsMobile] = useState(false);
 
   const messages = [
-    "🤖 Hmm, thinking...",
+    "🤖 Hey there, human!",
     "⚙️ Working on something cool?",
     "💡 Remember — creativity never sleeps!",
     "🚀 Keep building, you’re doing great!",
@@ -21,19 +21,19 @@ export default function RobotMascot() {
   // Detect mobile dynamically
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
+    handleResize(); // initial check
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   // Movement effect only for desktop
   useEffect(() => {
-    if (isMobile) return;
+    if (isMobile) return; // skip movement on mobile
 
     const move = async () => {
       const screenWidth = window.innerWidth;
-      const leftLimit = screenWidth * 0.1;
-      const rightLimit = screenWidth * 0.9;
+      const leftLimit = screenWidth * 0.1;  // 10% from left
+      const rightLimit = screenWidth * 0.9; // 10% from right
 
       while (true) {
         await controls.start({
@@ -71,34 +71,13 @@ export default function RobotMascot() {
   return (
     <motion.div
       className={`fixed bottom-10 z-50 flex flex-col items-center`}
+      // Mobile: fixed 5% from left, Desktop: controlled by animation
       animate={isMobile ? { x: 0 } : controls}
       style={{ left: isMobile ? "5%" : undefined }}
     >
       {text && (
-        <div className="relative mb-2 w-56 sm:w-64">
-          {/* Thinking Cloud Bubble */}
-          <svg
-            viewBox="0 0 220 120"
-            className="w-full h-auto"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            {/* Cloud shape */}
-            <path
-              d="M70 80 Q50 80 55 60 Q40 55 55 40 Q40 20 65 25 Q80 5 95 25 Q110 5 125 25 Q145 20 135 50 Q160 55 145 70 Q160 80 130 80 Z"
-              fill="white"
-              stroke="#ccc"
-              strokeWidth="3"
-              strokeLinejoin="round"
-            />
-            {/* Small trailing circles for thinking bubble */}
-            <circle cx="180" cy="90" r="4" fill="white" stroke="#ccc" strokeWidth="2" />
-            <circle cx="190" cy="100" r="3" fill="white" stroke="#ccc" strokeWidth="2" />
-            <circle cx="200" cy="110" r="2" fill="white" stroke="#ccc" strokeWidth="2" />
-          </svg>
-          {/* Text inside cloud */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 text-center text-sm sm:text-base font-medium text-black">
-            {text}
-          </div>
+        <div className="bg-white/80 text-black px-3 py-1 rounded-xl mb-2 shadow-md text-sm font-medium">
+          {text}
         </div>
       )}
       <Image
@@ -113,3 +92,4 @@ export default function RobotMascot() {
     </motion.div>
   );
 }
+ 
