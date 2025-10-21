@@ -19,26 +19,27 @@ export default function RobotMascot() {
 
   useEffect(() => {
     const move = async () => {
+      const isMobile = window.innerWidth < 768;
+      if (isMobile) return; // skip movement on mobile
+
+      const screenWidth = window.innerWidth;
+      const leftLimit = screenWidth * 0.1;  // 10% from left
+      const rightLimit = screenWidth * 0.9; // 10% from right
+
       while (true) {
-        const screenWidth = window.innerWidth;
-        const leftLimit = screenWidth * 0.1;  // 10% from left
-        const rightLimit = screenWidth * 0.9; // 10% from right
-
         // Move right
-await controls.start({
-  x: rightLimit - leftLimit,
-  transition: { duration: 12, ease: "easeInOut" }, // was 6
-});
+        await controls.start({
+          x: rightLimit - leftLimit,
+          transition: { duration: 24, ease: "easeInOut" }, // slower
+        });
+        await new Promise((r) => setTimeout(r, 2000)); // pause
 
-await new Promise((r) => setTimeout(r, 2000)); // pause
-
-// Move left
-await controls.start({
-  x: 0,
-  transition: { duration: 12, ease: "easeInOut" }, // was 6
-});
-
-await new Promise((r) => setTimeout(r, 2000)); // pause
+        // Move left
+        await controls.start({
+          x: 0,
+          transition: { duration: 24, ease: "easeInOut" },
+        });
+        await new Promise((r) => setTimeout(r, 2000)); // pause
       }
     };
     move();
@@ -60,7 +61,9 @@ await new Promise((r) => setTimeout(r, 2000)); // pause
 
   return (
     <motion.div
-      className="fixed bottom-10 left-[10%] z-50 flex flex-col items-center"
+      className={`fixed bottom-10 z-50 flex flex-col items-center 
+        ${typeof window !== "undefined" && window.innerWidth < 768 ? "left-[20%]" : "left-[10%]"}
+      `}
       animate={controls}
     >
       {text && (
