@@ -1,6 +1,5 @@
 "use client";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 export default function RobotMascot() {
@@ -17,7 +16,7 @@ export default function RobotMascot() {
     "🧠 Think smarter, not harder.",
   ];
 
-  // Detect mobile dynamically
+  // Detect mobile
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize();
@@ -25,7 +24,7 @@ export default function RobotMascot() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Text messages loop
+  // Text loop only
   useEffect(() => {
     let i = 0;
     let isMounted = true;
@@ -33,9 +32,9 @@ export default function RobotMascot() {
     const loopText = async () => {
       while (isMounted) {
         setText(messages[i]);
-        await new Promise((r) => setTimeout(r, 30000));
+        await new Promise((r) => setTimeout(r, 30000)); // show 30s
         setText("");
-        await new Promise((r) => setTimeout(r, 5000));
+        await new Promise((r) => setTimeout(r, 5000)); // pause 5s
         i = (i + 1) % messages.length;
       }
     };
@@ -47,9 +46,9 @@ export default function RobotMascot() {
   }, []);
 
   return (
-    <motion.div
+    <div
       className={`fixed bottom-10 z-50 flex flex-col items-center`}
-      style={{ left: isMobile ? "5%" : "10%" }} // position fixed for both screens
+      style={{ left: isMobile ? "5%" : "10%" }} // absolutely static
     >
       {text && (
         <div className="bg-white/80 text-black px-3 py-1 rounded-xl mb-2 shadow-md text-sm font-medium">
@@ -65,6 +64,6 @@ export default function RobotMascot() {
         priority
         className="drop-shadow-lg"
       />
-    </motion.div>
+    </div>
   );
 }
