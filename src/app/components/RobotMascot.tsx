@@ -7,6 +7,7 @@ export default function RobotMascot() {
   const controls = useAnimation();
   const [text, setText] = useState("🤖 Hey there!");
   const [isMobile, setIsMobile] = useState(false);
+  const [mounted, setMounted] = useState(false); // NEW: wait for client
 
   const messages = [
     "🤖 Hey there, human!",
@@ -20,6 +21,7 @@ export default function RobotMascot() {
 
   // Detect mobile dynamically
   useEffect(() => {
+    setMounted(true); // client has mounted
     const handleResize = () => setIsMobile(window.innerWidth < 768);
     handleResize(); // initial check
     window.addEventListener("resize", handleResize);
@@ -28,12 +30,12 @@ export default function RobotMascot() {
 
   // Movement effect only for desktop
   useEffect(() => {
-    if (isMobile) return; // skip movement on mobile
+    if (!mounted || isMobile) return; // wait until client
 
     const move = async () => {
       const screenWidth = window.innerWidth;
-      const leftLimit = screenWidth * 0.1;  // 10% from left
-      const rightLimit = screenWidth * 0.9; // 10% from right
+      const leftLimit = screenWidth * 0.1;
+      const rightLimit = screenWidth * 0.9;
 
       while (true) {
         await controls.start({
@@ -51,10 +53,11 @@ export default function RobotMascot() {
     };
 
     move();
-  }, [controls, isMobile]);
+  }, [controls, isMobile, mounted]);
 
   // Text messages loop
   useEffect(() => {
+    if (!mounted) return; // wait for client
     let i = 0;
     const loopText = async () => {
       while (true) {
@@ -66,12 +69,13 @@ export default function RobotMascot() {
       }
     };
     loopText();
-  }, []);
+  }, [mounted]);
+
+  if (!mounted) return null; // prevent SSR render issues
 
   return (
     <motion.div
-      className={`fixed bottom-10 z-50 flex flex-col items-center`}
-      // Mobile: fixed 5% from left, Desktop: controlled by animation
+      className="fixed bottom-10 z-50 flex flex-col items-center"
       animate={isMobile ? { x: 0 } : controls}
       style={{ left: isMobile ? "5%" : undefined }}
     >
@@ -92,4 +96,3 @@ export default function RobotMascot() {
     </motion.div>
   );
 }
- 
