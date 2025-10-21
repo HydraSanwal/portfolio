@@ -16,15 +16,15 @@ export default function RobotMascot() {
     "🧠 Think smarter, not harder.",
   ];
 
-  // Detect mobile
+  // Detect mobile dynamically
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
-    handleResize();
+    handleResize(); // initial check
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Text loop only
+  // Text messages loop
   useEffect(() => {
     let i = 0;
     let isMounted = true;
@@ -38,6 +38,7 @@ export default function RobotMascot() {
         i = (i + 1) % messages.length;
       }
     };
+
     loopText();
 
     return () => {
@@ -47,8 +48,8 @@ export default function RobotMascot() {
 
   return (
     <div
-      className={`fixed bottom-10 z-50 flex flex-col items-center`}
-      style={{ left: isMobile ? "5%" : "10%" }} // absolutely static
+      className="fixed bottom-10 z-50 flex flex-col items-center"
+      style={{ left: isMobile ? "5%" : "10%" }} // static position
     >
       {text && (
         <div className="bg-white/80 text-black px-3 py-1 rounded-xl mb-2 shadow-md text-sm font-medium">
