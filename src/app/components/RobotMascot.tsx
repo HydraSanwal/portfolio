@@ -1,8 +1,10 @@
 "use client";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function RobotMascot() {
+  const router = useRouter();
   const [mounted, setMounted] = useState(false);
   const [text, setText] = useState("🤖 Hey there!");
   const [isMobile, setIsMobile] = useState(false);
@@ -36,10 +38,10 @@ export default function RobotMascot() {
   useEffect(() => {
     if (!mounted) return;
     let i = 0;
-    let isMounted = true;
+    let isMountedLoop = true;
 
     const loopText = async () => {
-      while (isMounted) {
+      while (isMountedLoop) {
         setText(messages[i]);
         await new Promise((r) => setTimeout(r, 30000));
         setText("");
@@ -50,15 +52,21 @@ export default function RobotMascot() {
 
     loopText();
     return () => {
-      isMounted = false;
+      isMountedLoop = false;
     };
   }, [mounted]);
 
   if (!mounted) return null; // prevent SSR render
 
+  // Double-click handler
+  const handleDoubleClick = () => {
+    router.push("/typing"); // make sure this page exists
+  };
+
   return (
     <div
-      className="fixed bottom-10 z-50 flex flex-col items-center"
+      onDoubleClick={handleDoubleClick}
+      className="fixed bottom-10 z-50 flex flex-col items-center cursor-pointer"
       style={{ left: isMobile ? "5%" : "10%" }} // completely still
     >
       {text && (
@@ -69,8 +77,8 @@ export default function RobotMascot() {
       <Image
         src="/robot.gif"
         alt="Robot Mascot"
-        width={110}
-        height={110}
+        width={145}
+        height={145}
         unoptimized
         priority
         className="drop-shadow-lg"
