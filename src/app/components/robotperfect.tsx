@@ -68,20 +68,21 @@ export default function RobotMascot() {
     loopText();
   }, []);
 
-  return (
-    <motion.div
-      className={`fixed bottom-10 z-50 flex flex-col items-center`}
-      // Mobile: fixed 5% from left, Desktop: controlled by animation
-      animate={isMobile ? { x: 0 } : controls}
-      style={{ left: isMobile ? "5%" : undefined }}
-    >
+ return (
+  <motion.div
+    className={`fixed bottom-10 z-50 flex flex-col items-center`}
+    animate={isMobile ? { x: 0 } : controls}
+    style={{
+      right: "5%",   // 👈 5% from RIGHT wall
+    }}
+  >
       {text && (
         <div className="bg-white/80 text-black px-3 py-1 rounded-xl mb-2 shadow-md text-sm font-medium">
           {text}
         </div>
       )}
       <Image
-        src="/robot.gif"
+        src="/testrobo.gif"
         alt="Robot Mascot"
         width={110}
         height={110}
@@ -92,4 +93,3 @@ export default function RobotMascot() {
     </motion.div>
   );
 }
- 
