@@ -39,7 +39,7 @@ export default function RobotMascot() {
       <div
         className={`bg-white/80 text-black px-3 py-1 rounded-xl mb-2 shadow-md font-medium ${textSize} text-right`}
       >
-        Hey there! I'm your mini guide
+        Hey there! I&apos;m your mini guide
       </div>
 
       {/* Robot image */}

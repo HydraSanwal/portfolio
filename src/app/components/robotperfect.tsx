@@ -66,7 +66,7 @@ export default function RobotMascot() {
       }
     };
     loopText();
-  }, []);
+  }, [messages]);
 
  return (
   <motion.div
